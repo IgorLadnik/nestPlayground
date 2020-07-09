@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Req, Res, Body, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, Body, HttpStatus, UsePipes } from '@nestjs/common';
 import { CatService } from '../providers/cat.service';
 import { Request, Response } from 'express';
 import { CatDto } from '../dto/cat.dto';
+import { ValidationPipe } from '../pipes/validation.pipe';
 
 @Controller('cat')
 export class CatController {
@@ -14,6 +15,7 @@ export class CatController {
   }
 
   @Post()
+  @UsePipes(new ValidationPipe())
   create(@Body() body: CatDto, @Res() res: Response) {
     const id = this.catService.create(body);
     res.status(HttpStatus.CREATED).send(`${id}`);
