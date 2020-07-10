@@ -11,6 +11,10 @@ export class CatService {
     return this.cats;
   }
 
+  findOne(name: string): Cat {
+    return this.cats.filter(c => c.name?.toLowerCase() === name?.toLowerCase())[0];
+  }
+
   create(catDto: CatDto): number {
     this.cats.push({
       id: ++CatService.count,
